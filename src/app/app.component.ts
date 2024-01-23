@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ApiService } from 'src/app/api.service';
 
 @Component({
   standalone: true,
@@ -8,6 +9,11 @@ import { RouterModule } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  title = 'demo-frontend-for-deployment';
+export class AppComponent implements OnInit {
+  private readonly api = inject(ApiService);
+  title = '';
+
+  ngOnInit() {
+    this.api.getHello().subscribe((title) => (this.title = title));
+  }
 }
